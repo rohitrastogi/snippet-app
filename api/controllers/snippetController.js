@@ -1,6 +1,6 @@
 import Snippet from '../models/snippet';
 
-const getUserSnippets = function(username, page, limit, offset){
+const getUserSnippets = function(username, page, limit){
     return Snippet.find({ user: username})
         .limit(limit)
         .skip(limit * page)
@@ -9,7 +9,7 @@ const getUserSnippets = function(username, page, limit, offset){
         }).exec();
 }
 
-const getUserSnippetsByTag = function(username, tag, page, limit, offset){
+const getUserSnippetsByTag = function(username, tag, page, limit){
     return Snippet.find({ 
         user: username,
         tags: tag
@@ -29,9 +29,15 @@ const deleteSnippetById = function(id){
     return Snippet.findByIdAndRemove(id).exec();
 }
 
+const createSnippet = function(options){
+    let newSnippet = options;
+    Snippet.save(newSnippet).exec();
+}
+
 export default {
     getUserSnippets,
     getUserSnippetsByTag,
     updateSnippetById,
-    deleteSnippetById
+    deleteSnippetById,
+    createSnippet
 };
